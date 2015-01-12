@@ -1,0 +1,21 @@
+<div class="login-container login">
+    <div class="login-item"></div>
+    <div class="login-item">
+        <form name="myForm" novalidate>
+            <input-control control-form="myForm"
+                           control-name="myUser"
+                           control-type="text"
+                           control-placeholder="Usuario"
+                           control-validate="true"
+                    ></input-control>
+            <input-control control-form="myForm"
+                           control-name="myPass"
+                           control-type="password"
+                           control-placeholder="Password"
+                           control-validate="true"></input-control>
+            <button-control classes="loginCtrl.classes" name="loginCtrl.name" ng-click="loginCtrl.login(myForm)"></button-control>
+
+        </form>
+    </div>
+    <div class="login-item"></div>
+</div>

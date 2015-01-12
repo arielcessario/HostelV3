@@ -1,0 +1,69 @@
+@import "compass";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300|Roboto+Condensed);
+
+.btn {
+  background: #CCC;
+  color: #FFF;
+  display: inline-block;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  line-height: 2.5em;
+  padding: 0 3em;
+  text-decoration: none;
+
+}
+
+.btn-red {
+  background: linear-gradient(#D60A0A,#B20808);
+  text-shadow: 1px 1px 1px #B20808;
+}
+
+.btn-blue {
+  background: linear-gradient(#11A1D6,#0E86B2);
+  text-shadow: 1px 1px 1px #0E86B2;
+}
+
+.btn-small {
+  line-height: 1.75em;
+  padding: 0 1.5em;
+}
+
+.btn-large {
+  line-height: 3em;
+  padding: 0 3.5em;
+}
+
+.btn-full{
+  width: 100%;
+}
+
+.btn-green {
+  background: linear-gradient(#6BDB55,#57B245);
+  text-shadow: 1px 1px 1px #57B245;
+
+}
+
+.btn:hover {
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.2),
+  inset 0 1.5em 1em rgba(255,255,255,0.3);
+}
+
+.btn:active {
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.2),
+  inset 0 1.5em 1em rgba(0,0,0,0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+

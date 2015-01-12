@@ -1,0 +1,81 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100|Roboto+Condensed);
+/* line 10, ../sass/popup-control.scss */
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk2OTY5NiIgc3RvcC1vcGFjaXR5PSIwLjciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5Njk2OTYiIHN0b3Atb3BhY2l0eT0iMC43Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(150, 150, 150, 0.7)), color-stop(100%, rgba(150, 150, 150, 0.7)));
+  background-image: -moz-linear-gradient(top, rgba(150, 150, 150, 0.7), rgba(150, 150, 150, 0.7));
+  background-image: -webkit-linear-gradient(top, rgba(150, 150, 150, 0.7), rgba(150, 150, 150, 0.7));
+  background-image: linear-gradient(to bottom, rgba(150, 150, 150, 0.7), rgba(150, 150, 150, 0.7));
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+/* line 24, ../sass/popup-control.scss */
+.popup.ng-hide-add.ng-hide-add-active {
+  opacity: 1;
+}
+
+/* line 28, ../sass/popup-control.scss */
+.popup.ng-hide-add.ng-hide-add-active,
+.popup.ng-hide-remove {
+  opacity: 0;
+}
+
+/* line 33, ../sass/popup-control.scss */
+.popup-container {
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  bottom: auto;
+  right: 15%;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #ffffff));
+  background-image: -moz-linear-gradient(#ffffff, #ffffff);
+  background-image: -webkit-linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(#ffffff, #ffffff);
+  -moz-box-shadow: rgba(50, 50, 50, 0.4) 0 0 25px, rgba(150, 150, 150, 0.2) 0 0 3px 1px inset;
+  -webkit-box-shadow: rgba(50, 50, 50, 0.4) 0 0 25px, rgba(150, 150, 150, 0.2) 0 0 3px 1px inset;
+  box-shadow: rgba(50, 50, 50, 0.4) 0 0 25px, rgba(150, 150, 150, 0.2) 0 0 3px 1px inset;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+/* line 43, ../sass/popup-control.scss */
+.popup-container form {
+  padding: 20px;
+}
+/* line 47, ../sass/popup-control.scss */
+.popup-container .popup-titulo {
+  font-size: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmNTAzMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y4MzgyNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ff5032), color-stop(100%, #f83827));
+  background-image: -moz-linear-gradient(top, #ff5032, #f83827);
+  background-image: -webkit-linear-gradient(top, #ff5032, #f83827);
+  background-image: linear-gradient(to bottom, #ff5032, #f83827);
+  color: #ffffff;
+  height: 25px;
+  position: relative;
+  top: 10px;
+  left: 0px;
+  right: 0px;
+  padding-left: 10px;
+}

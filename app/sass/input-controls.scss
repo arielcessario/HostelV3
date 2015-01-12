@@ -1,0 +1,95 @@
+@import "compass";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300|Roboto+Condensed);
+
+$main-color: #A9071E;
+$main-color-RGB: rgb(169, 7, 30);
+$secondary-color: #A0D36E;
+$secondary-color-RGB: rgb(160, 211, 110);
+$accent-color: #FACB47;
+$accent-color-RGB: rgb(250, 203, 71);
+$back-color: #AAD1D8;
+$back-color-RGB: rgb(170, 209, 216);
+$white-color: #FFFFFF;
+$white-color-RGB: rgb(255, 255, 255);
+
+@mixin input-text($color) {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba($color, 0.3);
+  background-color: rgba($color, 0.2);
+  border-radius: 6px;
+  padding: 5px;
+  margin: 5px;
+  -webkit-transition-duration: 0.5s;
+}
+
+.custom-elem{
+  @include input-text($back-color-RGB);
+}
+
+input.ng-invalid, .custom-elem.ng-invalid {
+  @include input-text($main-color-RGB);
+}
+
+input.ng-valid, .custom-elem.ng-valid {
+  @include input-text($secondary-color-RGB);
+}
+
+input.ng-pristine, .custom-elem.ng-pristine {
+  @include input-text($back-color-RGB);
+}
+
+input.ng-pristine:focus, .custom-elem.ng-pristine:focus{
+  box-shadow: 0px 0px 15px 1px rgba($back-color-RGB, 0.8);
+  outline: 0;
+}
+
+.ng-valid:focus {
+  box-shadow: 0px 0px 15px 1px rgba($secondary-color-RGB, 0.8);
+  outline: 0;
+}
+
+.ng-invalid:focus {
+  box-shadow: 0px 0px 15px 1px rgba($main-color-RGB, 0.8);
+  outline: 0;
+}
+.field{
+  display: inline-block;
+  .label-input-control{
+    width: 100px;
+  }
+}
+//.field {
+  .messages {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    border: solid 0px;
+    border-radius: 4px;
+    background-color: #444444;
+    color: $white-color;
+    padding: 4px;
+    position: absolute;
+    min-height: 0.7em;
+    font-size: 0.8em;
+    //    bottom: 35px;
+    //    left: 300px;
+    display: inline-block;
+    min-width: 100px;
+    max-width: 400px;
+    box-shadow: 5px 5px 10px #999999;
+    //    transition:1s linear;
+    transition-duration: 0.5s;
+  }
+
+  .ng-active {
+    opacity: 1;
+    // messages are visible
+  }
+  .ng-inactive {
+    opacity: 0;
+    height: 0px;
+    // messages are hidden
+  }
+
+//}

@@ -1,0 +1,72 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import "compass";
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100|Roboto+Condensed);
+
+
+//popup
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  @include background-image(linear-gradient(to bottom, rgba(150, 150, 150, 0.7), rgba(150, 150, 150, 0.7)));
+  @include transition-property(all);
+  @include transition-duration(0.5s);
+  //  -webkit-transition: 5s linear all; /* Safari/Chrome */
+  //  transition: 5s linear all;
+
+}
+
+.popup.ng-hide-add.ng-hide-add-active {
+  opacity: 1;
+}
+
+.popup.ng-hide-add.ng-hide-add-active,
+.popup.ng-hide-remove {
+  opacity: 0;
+}
+
+.popup-container {
+
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  bottom: auto;
+  right: 15%;
+  @include background-image(linear-gradient(white, white));
+  @include box-shadow(rgba(50, 50, 50, 0.4) 0 0 25px, rgba(150, 150, 150, 0.2) 0 0 3px 1px inset);
+  @include border-radius(10px);
+  form {
+  padding: 20px;
+  }
+
+  .popup-titulo {
+    font-size: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    @include background-image(linear-gradient(to bottom, rgba(270, 80, 50, 1), rgba(248, 56, 39, 1)));
+    color:#ffffff;
+    height: 25px;
+    position: relative;
+    top: 10px;
+    left: 0px;
+    right: 0px;
+    padding-left: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

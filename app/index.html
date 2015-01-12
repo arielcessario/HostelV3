@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="hostel" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="hostel" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="hostel" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="hostel" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hostel Admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--de terceros-->
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css    ">
+
+
+    <!--propios-->
+    <link rel="stylesheet" href="stylesheets/screen.css">
+    <link rel="stylesheet" href="stylesheets/input-controls.css">
+    <link rel="stylesheet" href="stylesheets/button-control.css">
+    <link rel="stylesheet" href="stylesheets/login-control.css">
+    <link rel="stylesheet" href="stylesheets/nav-control.css">
+    <link rel="stylesheet" href="stylesheets/popup-control.css">
+
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body ng-controller="MainCtrl as mainCtrl">
+<!--<ul class="menu">-->
+<!--<li><a href="#/login">view1</a></li>-->
+<!--<li><a href="#/view2">view2</a></li>-->
+<!--</ul>-->
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<nav-control buttons="mainCtrl.nav" is-logged="mainCtrl.isLogged"></nav-control>
+
+
+        <div class="app-container" ng-view></div>
+
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+
+
+<!--componentes-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-smart-table/dist/smart-table.debug.js"></script>
+<script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
+
+<!--principal-->
+<script src="app.js"></script>
+
+<!--directivas propias-->
+<script src="directives/inputs/input-controls.js"></script>
+<script src="directives/login/login-control.js"></script>
+<script src="directives/login/login-service.js"></script>
+<script src="directives/cuentas/cuentas-service.js"></script>
+<script src="directives/buttons/button-control.js"></script>
+<script src="directives/nav/nav-control.js"></script>
+<script src="directives/popup/popup-control.js"></script>
+<script src="view2/view2.js"></script>
+
+<!--views-->
+<script src="views/login/login.js"></script>
+<script src="views/logout/logout.js"></script>
+<script src="views/productos/productos.js"></script>
+<script src="views/productos/productos-service.js"></script>
+
+
+<!--otros-->
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>

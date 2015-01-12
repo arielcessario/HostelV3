@@ -1,0 +1,162 @@
+<div class="main-container" ng-controller="ProductosCtrl as productosCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Productos</span>
+            <button-control classes="'btn btn-green btn-small'" name="'Nuevo'"
+                            ng-click="productosCtrl.new()"></button-control>
+        </div>
+        <div>
+            <table st-table="productosCtrl.productosFiltrados"
+                   st-safe-src="productosCtrl.productos"
+                   class="ui-grid-top-panel grid">
+                <thead>
+                <tr class="encabezado">
+                    <th st-sort="idProducto">Id</th>
+                    <th>Nombre</th>
+                    <th>Proveedor</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Pto. Repo.</th>
+                    <th>Cuenta</th>
+                    <th>SKU</th>
+                </tr>
+                <tr class="filtroListas">
+                    <th colspan="8"><input st-search="" class="form-control" placeholder="Filtrar contenido ..."
+                                           type="text"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr st-select-row="row"
+                    ng-repeat="row in productosCtrl.productosFiltrados"
+                    ng-click="productosCtrl.selecciona(row)"
+                    ng-class="{'row-selected': row.idProducto === productosCtrl.selected}">
+                    <td>{{row.idProducto}}</td>
+                    <td>{{row.nombre}}</td>
+                    <td>{{row.idProveedor}}</td>
+                    <td>{{row.stock}}</td>
+                    <td>{{row.precio | currency}}</td>
+                    <td>{{row.ptoReposicion}}</td>
+                    <td>{{row.cuenta}}</td>
+                    <td>{{row.sku}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="8" class="grid-footer">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="popup" ng-show="productosCtrl.selected !== 0"
+             ng-click="">
+
+            <div class="popup-container">
+                <p class="popup-titulo">Productos</p>
+
+        <!--<popup-control titulo="Productos" ng-show="productosCtrl.selected !== 0">-->
+
+                <form name="productosForm" novalidate>
+
+                    <div>
+                        <div class="row">
+                            <input-control
+                                    control-form="productosForm"
+                                    control-name="productosNombre"
+                                    control-type="text"
+                                    control-placeholder="Nombre"
+                                    control-validate="true"
+                                    control-model="productosCtrl.selectedItem.nombre"
+                                    control-label="Nombre">
+                            </input-control>
+
+                            <label for="">Proveedor</label>
+                            <select class="custom-elem" ng-model="productosCtrl.selectedItem.idProveedor">
+                                <option value="">Proveedor</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <input-control
+                                    control-form="productosForm"
+                                    control-name="productosStock"
+                                    control-type="number"
+                                    control-placeholder="Stock"
+                                    control-validate="true"
+                                    control-model="productosCtrl.selectedItem.stock"
+                                    control-label="Stock">
+                            </input-control>
+                            <input-control
+                                    control-form="productosForm"
+                                    control-name="productosPrecio"
+                                    control-type="text"
+                                    control-placeholder="Precio"
+                                    control-validate="true"
+                                    control-model="productosCtrl.selectedItem.precio"
+                                    control-label="Precio">
+
+                            </input-control>
+                            <input-control
+                                    control-form="productosForm"
+                                    control-name="productosPto"
+                                    control-type="number"
+                                    control-placeholder="Punto de Reposición"
+                                    control-validate="true"
+                                    control-model="productosCtrl.selectedItem.ptoReposicion"
+                                    control-label="Punto de Reposición">
+                            </input-control>
+
+                        </div>
+                        <div class="row">
+                            <label for="">Cuenta</label>
+                            <select
+                                    class="custom-elem"
+                                    ng-model="productosCtrl.selectedItem.cuenta"
+                                    ng-options="cuenta.nroCuenta as cuenta.nombre for cuenta in productosCtrl.cuentas">
+                                <option value="">Cuenta</option>
+                            </select>
+
+
+                            <input-control control-form="productosForm"
+                                           control-inline="row"
+                                           control-name="productosSKU"
+                                           control-type="select"
+                                           control-placeholder="SKU"
+                                           control-validate="true"
+                                           control-label="SKU"
+                                           control-model="productosCtrl.selectedItem.sku"></input-control>
+                        </div>
+                    </div>
+                    <div class="v-spacer"></div>
+                    <div>
+                        <button-control classes="'btn btn-green btn-small'" name="'Guardar'"
+                                        ng-click="productosCtrl.save(productosForm)"></button-control>
+
+                        <button-control classes="'btn btn-red btn-small'" name="'Borrar'"
+                                        ng-click="productosCtrl.delete()"></button-control>
+
+
+                        <button-control classes="'btn btn-blue btn-small'" name="'Cerrar'"
+                                        ng-click="productosCtrl.close()"></button-control>
+                    </div>
+
+
+                </form>
+        <!--</popup-control>-->
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

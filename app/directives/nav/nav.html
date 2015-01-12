@@ -1,0 +1,9 @@
+<div class="nav-container" ng-if="navCtrl.logged" >
+    <ul>
+        <li ng-repeat="button in navCtrl.buttons">
+            <a href="{{button.url}}">{{button.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<!--<button>{{buttonCtrl.name}}</button>-->
