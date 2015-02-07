@@ -1,0 +1,21 @@
+<div class="footer-container" ng-if="footerCtrl.logged" >
+    <ul>
+        <li>
+            <span>Estado de la caja: {{footerCtrl.cajaEstado}}</span>
+        </li>
+        <li>
+            <span>Caja Abierta por: {{footerCtrl.nombreUsuario}}</span>
+        </li>
+        <li>
+            <span>Total en caja: {{footerCtrl.totalCaja | currency}}</span>
+        </li>
+        <li>
+            <span>Usuario conectado: {{footerCtrl.usuarioConectado}}</span>
+        </li>
+        <li>
+            <span>Dolar: $ {{footerCtrl.cotizacionDolar}}</span>
+        </li>
+    </ul>
+</div>
+
+<!--<button>{{buttonCtrl.name}}</button>-->

@@ -20,9 +20,10 @@
 
       //console.log('entra');
       LoginService.ClearCredentials();
-      var globals = $cookieStore.get('globals');
-      console.log(globals);
+      //var globals = $cookieStore.get('globals');
+      //console.log(globals);
       $location.path('#/login');
+      $cookieStore.remove("caja");
 
   }
 })();

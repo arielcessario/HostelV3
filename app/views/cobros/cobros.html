@@ -1,0 +1,148 @@
+<div class="main-container" ng-controller="CobrosCtrl as cobrosCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Cobros</span>
+
+        </div>
+        <div class="v-spacer"></div>
+        <div class="cliente-cobros">
+            <div class="row">
+
+                <input type="text" placeholder="Buscar Clientes" ng-model="cobrosCtrl.filtro"
+                       class="custom-elem clientes-cobros-busqueda" ng-keyup="cobrosCtrl.buscarCliente()"/>
+            </div>
+            <div class="row">
+                <select name=""
+                        size="18"
+                        ng-model="cobrosCtrl.cliente"
+                        class="custom-elem clientes-cobros-busqueda"
+                    ng-options="cliente.nombre + ' ' + cliente.apellido for cliente in cobrosCtrl.clientes | filter:cobrosCtrl.filtro">
+
+
+                </select>
+            </div>
+        </div>
+
+        <span ng-if="!cobrosCtrl.cobroManual" class="line-v-spacer row total-cobro">Total venta: {{cobrosCtrl.totalVenta | currency}}</span>
+
+        <div ng-if="cobrosCtrl.cobroManual">
+            <div class="row">
+                <input type="number" step="0.01" ng-model="cobrosCtrl.totalVenta" class="custom-elem"
+                       ng-keyup="cobrosCtrl.calcACobrar()" placeholder="A cobrar en $"/>
+                <select
+                        class="custom-elem "
+                        ng-model="cobrosCtrl.cuenta"
+                        ng-options="cuenta.nroCuenta as cuenta.nombre for cuenta in cobrosCtrl.cuentas">
+                    <option value="">Cuenta</option>
+                </select>
+                <input style="width: 36%;" type="text" ng-model="cobrosCtrl.comentarios" class="custom-elem"
+                        placeholder="Comentarios..."/>
+            </div>
+        </div>
+
+        <div class="v-spacer"></div>
+
+
+        <form name="cobrosFrom" novalidate>
+
+            <div>
+                <div class="row">
+                    <label class="label-input-control" for="">Moneda</label>
+                    <select
+                            class="custom-elem"
+                            ng-model="cobrosCtrl.moneda"
+                            ng-options="moneda.nombre for moneda in cobrosCtrl.monedas"
+                            ng-click="cobrosCtrl.aPagar = cobrosCtrl.totalVenta / cobrosCtrl.moneda.cotizacion;
+                            cobrosCtrl.descuentoCantidad = 0; cobrosCtrl.descuentoPorc=0;cobrosCtrl.vuelto = 0;cobrosCtrl.pagaCon = 0;">
+
+                    </select>
+
+                    <label class="label-input-control" for="">Tipo</label>
+                    <select
+                            class="custom-elem"
+                            ng-model="cobrosCtrl.tipo">
+                        <option value="0">Efectivo</option>
+                        <option value="1">Débito</option>
+                        <option value="2">Crédito</option>
+
+                    </select>
+
+                </div>
+
+                <div class="row">
+                    <input-control
+                            control-form="cobrosForm"
+                            control-name="cobrosDescuentoCantidad"
+                            control-type="text"
+                            control-placeholder="Descuento en {{cobrosCtrl.moneda.simbolo}}"
+                            control-validate="true"
+                            control-model="cobrosCtrl.descuentoCantidad"
+                            ng-keyup="cobrosCtrl.calcACobrar()"
+                            control-label="Descuento">
+                    </input-control>
+                </div>
+                <div class="row">
+                    <input-control
+                            control-form="cobrosForm"
+                            control-name="cobrosDescuentoPorc"
+                            control-type="text"
+                            control-placeholder="Descuento en %"
+                            control-validate="true"
+                            control-model="cobrosCtrl.descuentoPorc"
+                            ng-keyup="cobrosCtrl.calcACobrarPorc()"
+                            control-label="">
+
+                    </input-control>
+
+
+                </div>
+                <div class="row">
+                    <span class="line-v-spacer row total-cobro label-input-control">A pagar: </span>
+                        <span class="line-v-spacer row total-cobro">{{cobrosCtrl.moneda.simbolo}} {{cobrosCtrl.aPagar | number:2}}
+                </div>
+                <div class="row">
+                    <input-control
+                            control-form="cobrosForm"
+                            control-name="cobrosPagaCon"
+                            control-type="text"
+                            control-placeholder="Paga con {{cobrosCtrl.moneda.simbolo}}"
+                            control-validate="true"
+                            control-model="cobrosCtrl.pagaCon"
+                            ng-keyup="cobrosCtrl.pagaConPesos()"
+                            control-label="Paga con ">
+
+                    </input-control>
+                </div>
+                <div class="row">
+                    <span class="line-v-spacer row total-cobro label-input-control">Vuelto: </span>
+                    <span class="line-v-spacer row total-cobro">{{cobrosCtrl.vuelto | currency}} </span>
+                </div>
+            </div>
+            <div class="v-spacer"></div>
+            <div>
+                <button-control classes="'btn btn-green btn-small'" name="'Cobrar'"
+                                ng-click="cobrosCtrl.aCuenta = false; cobrosCtrl.cobrar(cobrosForm)"></button-control>
+
+                <!--<button-control classes="'btn btn-red btn-small'" name="'Borrar'"-->
+                <!--ng-click="cobrosCtrl.delete()"></button-control>-->
+
+
+                <button-control classes="'btn btn-red btn-small'" name="'A Cuenta'" ng-if="cobrosCtrl.tipo==='0' && cobrosCtrl.cuenta !== '1.1.2.01'"
+                                ng-click="cobrosCtrl.aCuenta = true; cobrosCtrl.cobrar(cobrosForm)"></button-control>
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

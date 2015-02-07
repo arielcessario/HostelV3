@@ -24,8 +24,14 @@ $white-color-RGB: rgb(255, 255, 255);
   -webkit-transition-duration: 0.5s;
 }
 
+
 .custom-elem{
   @include input-text($back-color-RGB);
+}
+
+.custom-elem:focus{
+  box-shadow: 0px 0px 15px 1px rgba($back-color-RGB, 0.8);
+  outline: 0;
 }
 
 input.ng-invalid, .custom-elem.ng-invalid {
@@ -40,7 +46,8 @@ input.ng-pristine, .custom-elem.ng-pristine {
   @include input-text($back-color-RGB);
 }
 
-input.ng-pristine:focus, .custom-elem.ng-pristine:focus{
+input.ng-pristine:focus,
+.custom-elem.ng-pristine:focus{
   box-shadow: 0px 0px 15px 1px rgba($back-color-RGB, 0.8);
   outline: 0;
 }
@@ -56,10 +63,16 @@ input.ng-pristine:focus, .custom-elem.ng-pristine:focus{
 }
 .field{
   display: inline-block;
-  .label-input-control{
-    width: 100px;
-  }
+
 }
+
+.label-input-control{
+  width: 80px;
+  min-width: 50px;
+  max-width: 150px;
+  display: inline-block;
+}
+
 //.field {
   .messages {
     font-family: 'Roboto', sans-serif;

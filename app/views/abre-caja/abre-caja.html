@@ -1,0 +1,27 @@
+<div class="main-container" ng-controller="AbreCajaCtrl as abreCajaCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Abrir Caja</span>
+            <button-control classes="'btn btn-green btn-small'" name="'Abrir'"
+                            ng-click="abreCajaCtrl.abrirCaja()"></button-control>
+        </div>
+        <div class="v-spacer"></div>
+        <div class="detalle-container">
+
+            <div class="detalle-total">
+                <span >Saldo Inicial: {{abreCajaCtrl.total | currency}}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

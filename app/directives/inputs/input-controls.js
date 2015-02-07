@@ -81,7 +81,7 @@
                 //console.log(attributes);
                     element.html(
                         '<div class="field"> ' +
-                        '<span for="'+attributes.controlName+'" class="label-input-control">'+label+'</label>' +
+                        '<label for="'+attributes.controlName+'" class="label-input-control">'+label+'</label>' +
                         '   <input type="' + attributes.controlType + '" ' +
                                     'name="' + attributes.controlName + '" ' +
                         '           ng-minlength="1" ' +

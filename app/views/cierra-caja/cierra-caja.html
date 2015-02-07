@@ -1,0 +1,31 @@
+<div class="main-container" ng-controller="CierraCajaCtrl as cierraCajaCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Abrir Caja</span>
+            <button-control classes="'btn btn-blue btn-small'" name="'Cerrar'"
+                            ng-click="cierraCajaCtrl.cerrarCaja()"></button-control>
+        </div>
+        <div class="v-spacer"></div>
+        <div class="detalle-container">
+
+            <div class="detalle-total" >
+
+                <span >Saldo final en $: {{cierraCajaCtrl.totalPesos}}</span>
+                <span >Saldo final en u$s: {{cierraCajaCtrl.totalDolares}}</span>
+                <span >Saldo final en E: {{cierraCajaCtrl.totalEuros}}</span>
+                <span >Saldo final en R: {{cierraCajaCtrl.totalReales}}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

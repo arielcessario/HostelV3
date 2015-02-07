@@ -20,12 +20,13 @@
                     <th>Proveedor</th>
                     <th>Stock</th>
                     <th>Precio</th>
+                    <th>Costo</th>
                     <th>Pto. Repo.</th>
                     <th>Cuenta</th>
                     <th>SKU</th>
                 </tr>
                 <tr class="filtroListas">
-                    <th colspan="8"><input st-search="" class="form-control" placeholder="Filtrar contenido ..."
+                    <th colspan="9"><input st-search="" class="form-control" placeholder="Filtrar contenido ..."
                                            type="text"/></th>
                 </tr>
                 </thead>
@@ -39,6 +40,7 @@
                     <td>{{row.idProveedor}}</td>
                     <td>{{row.stock}}</td>
                     <td>{{row.precio | currency}}</td>
+                    <td>{{row.costo | currency}}</td>
                     <td>{{row.ptoReposicion}}</td>
                     <td>{{row.cuenta}}</td>
                     <td>{{row.sku}}</td>
@@ -47,7 +49,7 @@
                 <tfoot>
                 <tr>
                     <td colspan="8" class="grid-footer">
-                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
                     </td>
                 </tr>
                 </tfoot>
@@ -76,7 +78,7 @@
                                     control-label="Nombre">
                             </input-control>
 
-                            <label for="">Proveedor</label>
+                            <label class="label-input-control"  for="">Proveedor</label>
                             <select class="custom-elem" ng-model="productosCtrl.selectedItem.idProveedor">
                                 <option value="">Proveedor</option>
                             </select>
@@ -102,6 +104,16 @@
                                     control-label="Precio">
 
                             </input-control>
+                        </div>
+                        <div class="row">
+                            <input-control control-form="productosForm"
+                                           control-inline="row"
+                                           control-name="productosCosto"
+                                           control-type="text"
+                                           control-placeholder="Costo"
+                                           control-validate="true"
+                                           control-label="Costo"
+                                           control-model="productosCtrl.selectedItem.costo"></input-control>
                             <input-control
                                     control-form="productosForm"
                                     control-name="productosPto"
@@ -109,14 +121,14 @@
                                     control-placeholder="Punto de Reposición"
                                     control-validate="true"
                                     control-model="productosCtrl.selectedItem.ptoReposicion"
-                                    control-label="Punto de Reposición">
+                                    control-label="Pto. Rep.">
                             </input-control>
 
                         </div>
                         <div class="row">
-                            <label for="">Cuenta</label>
+                            <label class="label-input-control" for="">Cuenta</label>
                             <select
-                                    class="custom-elem"
+                                    class="custom-elem "
                                     ng-model="productosCtrl.selectedItem.cuenta"
                                     ng-options="cuenta.nroCuenta as cuenta.nombre for cuenta in productosCtrl.cuentas">
                                 <option value="">Cuenta</option>
@@ -126,11 +138,13 @@
                             <input-control control-form="productosForm"
                                            control-inline="row"
                                            control-name="productosSKU"
-                                           control-type="select"
+                                           control-type="text"
                                            control-placeholder="SKU"
                                            control-validate="true"
                                            control-label="SKU"
                                            control-model="productosCtrl.selectedItem.sku"></input-control>
+
+
                         </div>
                     </div>
                     <div class="v-spacer"></div>
@@ -138,8 +152,8 @@
                         <button-control classes="'btn btn-green btn-small'" name="'Guardar'"
                                         ng-click="productosCtrl.save(productosForm)"></button-control>
 
-                        <button-control classes="'btn btn-red btn-small'" name="'Borrar'"
-                                        ng-click="productosCtrl.delete()"></button-control>
+                        <!--<button-control classes="'btn btn-red btn-small'" name="'Borrar'"-->
+                                        <!--ng-click="productosCtrl.delete()"></button-control>-->
 
 
                         <button-control classes="'btn btn-blue btn-small'" name="'Cerrar'"

@@ -8,8 +8,8 @@
         'login-service',
         'button-control'
     ])
-        .directive('loginControl', Login)
-        .run(checkLogin);
+        .directive('loginControl', Login);
+        //.run(checkLogin);
 
 
 
@@ -42,19 +42,19 @@
             controllerAs: 'loginCtrl'
         };}
 
-
-    checkLogin.$inject = ['$cookieStore', '$location', '$rootScope'];
-
-    function checkLogin($cookieStore, $location, $rootScope) {
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            var globals = $cookieStore.get('globals');
-            if (globals === undefined) {
-                $location.path('/login');
-            }
-            //Look at the next parameter value to determine if a redirect is needed
-        });
-
-    };
+    //
+    //checkLogin.$inject = ['$cookieStore', '$location', '$rootScope'];
+    //
+    //function checkLogin($cookieStore, $location, $rootScope) {
+    //    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    //        var globals = $cookieStore.get('globals');
+    //        if (globals === undefined) {
+    //            $location.path('/login');
+    //        }
+    //        //Look at the next parameter value to determine if a redirect is needed
+    //    });
+    //
+    //};
 
 
 

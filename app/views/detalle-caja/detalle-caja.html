@@ -1,0 +1,113 @@
+<div class="main-container" ng-controller="DetalleCajaCtrl as detalleCajaCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Detalle de Caja</span>
+            <button-control ng-if="detalleCajaCtrl.abierta" classes="'btn btn-green btn-small'" name="'Abrir Caja'"
+                            ng-click="detalleCajaCtrl.abreCaja()"></button-control>
+            <button-control ng-if="!detalleCajaCtrl.abierta" classes="'btn btn-red btn-small'" name="'Cerrar Caja'"
+                            ng-click="detalleCajaCtrl.cierraCaja()"></button-control>
+        </div>
+        <div class="v-spacer"></div>
+        <div class="detalle-container">
+
+            <div class="detalle-total">
+                <span>Total en caja: {{detalleCajaCtrl.total | currency}}</span>
+            </div>
+
+
+            <div ng-repeat="asiento in detalleCajaCtrl.detalleCaja" class="detalle-detail-container">
+
+
+                <div ng-repeat="movimiento in asiento" class="detalle-row"
+                     ng-class="{'hide-row': movimiento.idCuenta === '5.1.1.01'
+                     || movimiento.idCuenta === '1.1.7.01'}">
+                    <!--{{movimiento.idCuenta}}-->
+
+
+
+                    <span ng-show="movimiento.idCuenta !== '1.1.1.01' && movimiento.idCuenta !== '5.1.1.01' && movimiento.idCuenta !== '1.1.7.01'">
+
+                        <span class="detalle-fecha">{{movimiento.fecha}} </span>
+
+                        <div ng-repeat="detalle in movimiento.detalles"
+                             class="detalle-right">
+
+
+                            <span ng-show="detalle.nombre === 'idProducto'">
+                                {{detalle.producto}}
+
+                            </span>
+                            <span ng-show="detalle.nombre === 'precioUnitario'" class="detalle-precio-unitario">{{detalle.valor | currency}} </span>
+
+                            <span ng-show="detalle.idTipoDetalle === 2">
+                                {{detalle.valor}}
+                            </span>
+                        </div>
+
+
+                        <!--Detalle de productos-->
+                        <!--<div ng-if="movimiento.idCuenta!=='4.1.1.01'" ng-repeat="detalle in movimiento.detalles"-->
+                             <!--class="detalle-right">-->
+                            <!--<span ng-if="detalle.nombre === 'idProducto'">-->
+                                <!--<span class="detalle-fecha">{{movimiento.fecha | date:'medium'}}   </span>-->
+                                <!--{{detalle.producto}}    </span>-->
+                            <!--<span ng-if="detalle.nombre === 'precioUnitario'" class="detalle-precio-unitario">{{detalle.valor | currency}} </span>-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;Detalle de Hospedaje&ndash;&gt;-->
+                        <!--<div ng-if="movimiento.idCuenta==='4.1.1.01' || movimiento.idCuenta==='1.1.2.01' || movimiento.idCuenta==='4.1.1.03'"-->
+                             <!--ng-repeat="detalle in movimiento.detalles" class="detalle-right">-->
+
+                            <!--<span class="detalle-fecha">{{movimiento.fecha | date:'medium'}}   </span>-->
+                            <!--{{detalle.valor}}-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;Detalle de Moneda extranjera&ndash;&gt;-->
+                        <!--<div ng-if="movimiento.idCuenta==='1.1.1.10'" class="detalle-right">-->
+                            <!--<span class="detalle-fecha">{{movimiento.fecha | date:'medium'}}   </span>-->
+
+                            <!--<div class="detalle-right" ng-repeat="detalle in movimiento.detalles">-->
+                                <!--<div ng-if="detalle.valor.length > 1">-->
+                                    <!--{{detalle.valor}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;Detalle de Gastos Varios&ndash;&gt;-->
+                        <!--<div ng-if="movimiento.idCuenta==='5.2.9.03' || movimiento.idCuenta==='5.2.9.04'"-->
+                             <!--ng-repeat="detalle in movimiento.detalles" class="detalle-right">-->
+
+                            <!--<span class="detalle-fecha">{{movimiento.fecha | date:'medium'}}   </span>-->
+                            <!--{{detalle.valor}}-->
+
+                        <!--</div>-->
+
+
+
+                    </span>
+                    <span ng-show="movimiento.idCuenta === '1.1.1.01'" class="detalle-precio">{{movimiento.importe | currency}}
+
+                    </span>
+                    <button-control style="position: relative; margin-right: 60px; margin-top: -50px;" ng-show="movimiento.idCuenta === '1.1.1.01' || movimiento.idCuenta === '1.1.2.01'" classes="'btn btn-red btn-small'" name="'Anular'"
+                                    ng-click="detalleCajaCtrl.deleteAsiento(movimiento.idAsiento)"></button-control>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

@@ -10,11 +10,11 @@
 (function(){
 
     'use strict';
-    var app = angular.module('login-service', []);
+    var app = angular.module('login-service', ['toastr']);
 
     app.factory('LoginService',
-        ['Base64', '$http', '$cookieStore', '$rootScope', '$location',
-            function (Base64, $http, $cookieStore, $rootScope, $location) {
+        ['Base64', '$http', '$cookieStore', '$rootScope', '$location', 'toastr',
+            function (Base64, $http, $cookieStore, $rootScope, $location, toastr) {
                 var vm = this;
 
                 var service = {};
@@ -24,9 +24,12 @@
                     return $http.post('./directives/login/api/login.php',
                         {"function": "login", username: username, password: password})
                         .success(function (data) {
-                            if(data[0] !== 'error'){
-                                service.SetCredentials(data.usuario, data.idRol);
-                                $location.path('/productos');
+                            if(data !== 'error') {
+                                service.SetCredentials(data.usuario, data.idRol, data.idUsuario, data.nombre);
+                                $location.path('/detalle-caja');
+                            }else{
+
+                                toastr.error('Usuario o password incorrectos', '');
                             }
 
                         })
@@ -37,7 +40,7 @@
                         });
                 };
 
-                service.SetCredentials = function (username, rol) {
+                service.SetCredentials = function (username, rol, id, nombre) {
                     var authdata = Base64.encode(username + ':' + rol);
 
 
@@ -46,7 +49,9 @@
                         currentUser: {
                             username: username,
                             authdata: authdata,
-                            rol: rol
+                            rol: rol,
+                            id: id,
+                            nombre: nombre
                         }
                     };
 

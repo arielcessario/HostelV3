@@ -1,0 +1,226 @@
+<div class="main-container" ng-controller="ClientesCtrl as clientesCtrl">
+
+    <div class="main-item">
+
+    </div>
+    <div class="main-item">
+        <div>
+            <span class="titulo">Clientes</span>
+            <button-control classes="'btn btn-green btn-small'" name="'Nuevo'"
+                            ng-click="clientesCtrl.new()"></button-control>
+            <button-control classes="'btn btn-blue btn-small'" name="'Deudores'" ng-if="clientesCtrl.verDeudores"
+                            ng-click="clientesCtrl.getDeudores()"></button-control>
+            <button-control classes="'btn btn-blue btn-small'" name="'Todos'" ng-if="!clientesCtrl.verDeudores"
+                            ng-click="clientesCtrl.getDeudores()"></button-control>
+        </div>
+        <div>
+            <table st-table="clientesCtrl.clientesFiltrados"
+                   st-safe-src="clientesCtrl.clientes"
+                   class="ui-grid-top-panel grid">
+                <thead>
+                <tr class="encabezado">
+                    <th st-sort="idCliente">Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Mail</th>
+                    <th>Nacionalidad</th>
+                    <th>Tipo Doc.</th>
+                    <th>Nro. Doc.</th>
+                    <th>Comentarios</th>
+                    <th>Marcado</th>
+                    <th st-sort="saldo">Saldo</th>
+                </tr>
+                <tr class="filtroListas">
+                    <th colspan="10"><input st-search="" class="form-control" placeholder="Filtrar contenido ..."
+                                           type="text"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr st-select-row="row"
+                    ng-repeat="row in clientesCtrl.clientesFiltrados"
+                    ng-click="clientesCtrl.selecciona(row)"
+                    ng-class="{'row-selected': row.idCliente === clientesCtrl.selected}"
+                        class="{{row.marcado === '1'?'row-marcada':''}}">
+                    <td>{{row.idCliente}}</td>
+                    <td>{{row.nombre}}</td>
+                    <td>{{row.apellido}}</td>
+                    <td>{{row.mail}}</td>
+                    <td>{{clientesCtrl.GetNacDescr(row.idNacionalidad)}}</td>
+                    <td>{{clientesCtrl.GetIdDescr(row.tipoDoc)}}</td>
+                    <td>{{row.nroDoc}}</td>
+                    <td>{{row.comentarios}}</td>
+                    <td>{{row.marcado != 0 ?'Si':'No'}}</td>
+                    <td>{{row.saldo}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="8" class="grid-footer">
+                        <div st-pagination="" st-items-by-page="20" st-displayed-pages="15"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="popup" ng-show="clientesCtrl.selected !== 0"
+             ng-click="">
+
+            <div class="popup-container">
+                <p class="popup-titulo">Clientes</p>
+
+        <!--<popup-control titulo="Clientes" ng-show="clientesCtrl.selected !== 0">-->
+
+                <form name="clientesForm" novalidate>
+
+                    <div>
+                        <div class="row">
+                            <input-control
+                                    control-form="clientesForm"
+                                    control-name="clientesNombre"
+                                    control-type="text"
+                                    control-placeholder="Nombre"
+                                    control-validate="true"
+                                    control-model="clientesCtrl.selectedCliente.nombre"
+                                    control-label="Nombre">
+                            </input-control>
+
+                            <input-control
+                                    control-form="clientesForm"
+                                    control-name="clientesApellido"
+                                    control-type="text"
+                                    control-placeholder="Apellido"
+                                    control-validate="true"
+                                    control-model="clientesCtrl.selectedCliente.apellido"
+                                    control-label="Apellido">
+                            </input-control>
+                        </div>
+
+                        <div class="row">
+                            <input-control
+                                    control-form="clientesForm"
+                                    control-name="clientesMail"
+                                    control-type="text"
+                                    control-placeholder="Mail"
+                                    control-validate="true"
+                                    control-model="clientesCtrl.selectedCliente.mail"
+                                    control-label="Mail">
+
+                            </input-control>
+
+                            <label class="label-input-control"  for="">Tipo <Doc class=""></Doc></label>
+                            <select
+                                    class="custom-elem "
+                                    ng-model="clientesCtrl.selectedCliente.tipoDoc">
+                                <option value="0">DNI</option>
+                                <option value="1">PASS</option>
+                                <option value="2">CI</option>
+                                <option value="3">Otros</option>
+                            </select>
+                            <input-control control-form="clientesForm"
+                                           control-inline="row"
+                                           control-name="clientesNroDoc"
+                                           control-type="text"
+                                           control-placeholder="Número de Documento"
+                                           control-validate="true"
+                                           control-label="Documento"
+                                           control-model="clientesCtrl.selectedCliente.nroDoc"></input-control>
+
+                        </div>
+                        <div class="row">
+                            <input-control
+                                    control-form="clientesForm"
+                                    control-name="clientesComentarios"
+                                    control-type="text"
+                                    control-placeholder="Comentarios"
+                                    control-validate="true"
+                                    control-model="clientesCtrl.selectedCliente.comentarios"
+                                    control-label="Comentarios">
+                            </input-control>
+                            <label class="label-input-control" for="">Marcado</label>
+                            <select
+                                    class="custom-elem "
+                                    ng-model="clientesCtrl.selectedCliente.marcado">
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                            </select>
+
+
+                            <input-control control-form="clientesForm"
+                                           control-inline="row"
+                                           control-name="clientesTelefono"
+                                           control-type="text"
+                                           control-placeholder="Telefono"
+                                           control-validate="true"
+                                           control-label="Telefono"
+                                           control-model="clientesCtrl.selectedCliente.telefono"></input-control>
+
+
+
+                        </div>
+                        <div class="row">
+
+                            <input-control control-form="clientesForm"
+                                           control-inline="row"
+                                           control-name="clientesFechaNac"
+                                           control-type="text"
+                                           control-placeholder="Fecha de Nacimiento"
+                                           control-validate="true"
+                                           control-label="F. Nac."
+                                           control-model="clientesCtrl.selectedCliente.fechaNacimiento"></input-control>
+
+                            <input-control control-form="clientesForm"
+                                           control-inline="row"
+                                           control-name="clientesProfesion"
+                                           control-type="text"
+                                           control-placeholder="Profesion"
+                                           control-validate="true"
+                                           control-label="Profesion."
+                                           control-model="clientesCtrl.selectedCliente.profesion"></input-control>
+                        </div>
+                        <div class="row">
+                            <input-control control-form="clientesForm"
+                                           control-inline="row"
+                                           control-name="clientesSaldo"
+                                           control-type="text"
+                                           control-placeholder="Saldo"
+                                           control-validate="true"
+                                           control-label="Saldo"
+                                           control-model="clientesCtrl.selectedCliente.saldo"></input-control>
+                            <label class="label-input-control" for="">Nacionalidad</label>
+                            <select
+                                    class="custom-elem "
+                                    ng-model="clientesCtrl.selectedCliente.idNacionalidad"
+                                    ng-options="nac.id as nac.country_name for nac in clientesCtrl.nacionalidades">
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="v-spacer"></div>
+                    <div>
+                        <button-control classes="'btn btn-green btn-small'" name="'Guardar'"
+                                        ng-click="clientesCtrl.save(clientesForm)"></button-control>
+
+                        <!--<button-control classes="'btn btn-red btn-small'" name="'Borrar'"-->
+                                        <!--ng-click="clientesCtrl.delete()"></button-control>-->
+
+
+                        <button-control classes="'btn btn-blue btn-small'" name="'Cerrar'"
+                                        ng-click="clientesCtrl.close()"></button-control>
+                    </div>
+
+
+                </form>
+        <!--</popup-control>-->
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="main-item">
+
+    </div>
+</div>

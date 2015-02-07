@@ -22,9 +22,9 @@
 
         .controller('ProductosCtrl', ProductosCtrl);
 
-    ProductosCtrl.$inject = ['ProductosService', 'CuentasService'];
+    ProductosCtrl.$inject = ['ProductosService', 'CuentasService', 'toastr'];
 
-    function ProductosCtrl(ProductosService, CuentasService) {
+    function ProductosCtrl(ProductosService, CuentasService, toastr) {
 
 
         var vm = this;
@@ -38,12 +38,12 @@
         CuentasService.GetBy(function(data){
             //console.log(data);
             vm.cuentas = data;
-        }, '1.1.7.');
+        }, 'like "1.1.7.%"');
 
         ProductosService.Get(function (data) {
             vm.productos = data;
 
-        });
+        }, '');
 
 
 
@@ -76,7 +76,8 @@
                 ptoReposicion: '',
                 cuenta:'',
                 sku:'',
-                status: 1
+                status: 1,
+                costo: ''
             }
         };
 
@@ -89,6 +90,12 @@
                 return;
             }
 
+            if(vm.selectedItem.cuenta === ''){
+                toastr.error('Debe seleccionar una cuenta', '');
+                return;
+
+            }
+
 
             vm.selectedItem.precio = vm.selectedItem.precio.replace(",",".");
 
@@ -99,7 +106,7 @@
                     ProductosService.Get(function (data) {
                         vm.productos = data;
 
-                    });
+                    }, '');
 
                 }, vm.selectedItem);
             }else{
@@ -109,7 +116,7 @@
                     ProductosService.Get(function (data) {
                         vm.productos = data;
 
-                    });
+                    }, '');
                 }, vm.selectedItem);
             }
 
@@ -123,7 +130,7 @@
                 ProductosService.Get(function (data) {
                     vm.productos = data;
 
-                });
+                }, '');
             }, vm.selectedItem.idProducto);
         }
 
@@ -132,7 +139,7 @@
             ProductosService.Get(function (data) {
                 vm.productos = data;
 
-            });
+            }, '');
 
         }
 

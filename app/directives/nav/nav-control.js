@@ -7,9 +7,9 @@
         .directive('navControl', Nav);
 
 
-    Nav.$inject = ['$cookieStore', '$rootScope'];
+    Nav.$inject = ['$cookieStore', '$rootScope', '$location'];
 
-    function Nav($cookieStore, $rootScope) {
+    function Nav($cookieStore, $rootScope, $location) {
         return {
             restrict: 'E',
             scope: {
@@ -20,10 +20,28 @@
             controller: function ($scope, $compile, $http) {
                 var vm = this;
                 //console.log($scope);
-                vm.buttons = $scope.buttons;
+                vm.buttons =[];
+
+
+                vm.navFull = $scope.buttons;
+
+                var globals = $cookieStore.get('globals');
+                if(globals!== undefined){
+                    for (var i = 0; i < vm.navFull.length; i++) {
+                        if (globals.currentUser.rol <= vm.navFull[i].rol) {
+                            vm.buttons.push(vm.navFull[i]);
+                        }
+                    }
+                }
+
+
+
+
+
 
                 if ($scope.isLogged === false) {
-                    vm.logged = false;
+                    vm.logged = false
+                    $location.path('/login');
                 } else {
                     vm.logged = true;
                 }
@@ -33,8 +51,15 @@
                     var globals = $cookieStore.get('globals');
                     if (globals === undefined) {
                         vm.logged = false;
+                        $location.path('/login');
                     } else {
                         vm.logged = true;
+                        vm.buttons=[];
+                        for (var i = 0; i < vm.navFull.length; i++) {
+                            if (globals.currentUser.rol <= vm.navFull[i].rol) {
+                                vm.buttons.push(vm.navFull[i]);
+                            }
+                        }
                     }
                 });
 

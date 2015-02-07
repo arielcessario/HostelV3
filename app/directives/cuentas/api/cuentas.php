@@ -34,7 +34,7 @@ function getBy($params)
     $decoded = json_decode($params);
 
 
-    $db->where('nroCuenta like "' . $params . '%"');
+    $db->where('nroCuenta ' . $params);
     $results = $db->get("cuentas");
 
 

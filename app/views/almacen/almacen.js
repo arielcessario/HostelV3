@@ -3,10 +3,11 @@
 
     'use strict';
 
-    angular.module('hostel.productos', [
+    angular.module('hostel.almacen', [
         'ngRoute',
         'ngAnimate',
         'productos-service',
+        'cobros-service',
         'smart-table',
         'cuentas-service',
         'popup-control',
@@ -14,126 +15,63 @@
     ])
 
         .config(['$routeProvider', function ($routeProvider) {
-            $routeProvider.when('/productos', {
-                templateUrl: './views/productos/productos.html',
-                controller: 'ProductosCtrl'
+            $routeProvider.when('/almacen', {
+                templateUrl: './views/almacen/almacen.html',
+                controller: 'AlmacenCtrl'
             });
         }])
 
-        .controller('ProductosCtrl', ProductosCtrl);
+        .controller('AlmacenCtrl', AlmacenCtrl);
 
-    ProductosCtrl.$inject = ['ProductosService', 'CuentasService'];
+    AlmacenCtrl.$inject = ['CuentasService', 'ProductosService', '$location', 'CobrosRepository'];
 
-    function ProductosCtrl(ProductosService, CuentasService) {
-
-
+    function AlmacenCtrl(CuentasService, ProductosService, $location, CobrosRepository) {
         var vm = this;
-        vm.selected = 0;
-        vm.selectedItem = {};
-        vm.producto = {};
-        vm.cuentas = {};
-        vm.cuenta = {};
-        vm.isUpdate = false;
+        vm.productosSeleccionados = [];
+        vm.productoSeleccionado = {};
+        vm.totalACobrar = 0.0;
 
-        CuentasService.GetBy(function(data){
-            //console.log(data);
-            vm.cuentas = data;
-        }, '1.1.7.');
-
-        ProductosService.Get(function (data) {
-            vm.productos = data;
-
-        });
+        ProductosService.Get(getProductos, 'toSell');
+        vm.addProducto = addProducto;
+        vm.cobrar = cobrar;
+        vm.removeProducto = removeProducto;
 
 
 
-        vm.productosFiltrados = [].concat(vm.productos)
-
-        vm.selecciona = function (row) {
-            //console.log(row);
-
-            if(vm.selected !== 0 &&  vm.selected === row.idProducto){
-                vm.selected = 0;
-                vm.selectedItem = {};
-                vm.isUpdate= false;
-            }else{
-                vm.selected = row.idProducto;
-                vm.selectedItem = row;
-                vm.isUpdate = true;
-            }
-        }
-
-
-        vm.new = function(){
-            vm.selected = -1;
-            vm.isUpdate = false;
-            vm.selectedItem ={
-                idProducto: '',
-                nombre: '',
-                idProveedor: '',
-                stock: '',
-                precio: '',
-                ptoReposicion: '',
-                cuenta:'',
-                sku:'',
-                status: 1
-            }
-        };
-
-
-
-        vm.save = function(form){
-            //console.log(vm.);
-
-            if(!form.$valid){
+        function cobrar() {
+            if(vm.productosSeleccionados.length === 0){
                 return;
             }
 
+            CobrosRepository.aCobrar = vm.productosSeleccionados;
+            $location.path('/cobros/almacen');
+        };
 
-            vm.selectedItem.precio = vm.selectedItem.precio.replace(",",".");
 
-            if(vm.isUpdate){
-                ProductosService.Update(function(data){
-                    //console.log(data);
-                    vm.selected = 0;
-                    ProductosService.Get(function (data) {
-                        vm.productos = data;
+        function addProducto() {
+            vm.productosSeleccionados.push(vm.producto);
+            vm.productoSeleccionado = vm.productosSeleccionados[0];
+            vm.totalACobrar = vm.totalACobrar + parseFloat(vm.producto.precio);
 
-                    });
+        }
 
-                }, vm.selectedItem);
-            }else{
-                ProductosService.Save(function(data){
-                    //console.log(data);
-                    vm.selected = 0;
-                    ProductosService.Get(function (data) {
-                        vm.productos = data;
+        function removeProducto() {
+            var index = vm.productosSeleccionados.indexOf(vm.productoSeleccionado);
+            vm.productosSeleccionados.splice(index, 1);
 
-                    });
-                }, vm.selectedItem);
+            vm.totalACobrar = vm.totalACobrar - parseFloat(vm.productoSeleccionado.precio);
+
+            if (index > vm.productosSeleccionados.length - 1) {
+                vm.productoSeleccionado = vm.productosSeleccionados[index - 1];
+            } else {
+                vm.productoSeleccionado = vm.productosSeleccionados[index];
             }
-
-
         }
 
-        vm.delete = function(){
-            ProductosService.Delete(function(data){
-                console.log(data);
-                vm.selected = 0;
-                ProductosService.Get(function (data) {
-                    vm.productos = data;
 
-                });
-            }, vm.selectedItem.idProducto);
-        }
-
-        vm.close = function(){
-                vm.selected = 0;
-            ProductosService.Get(function (data) {
-                vm.productos = data;
-
-            });
-
+        function getProductos(data) {
+            vm.productos = data;
+            vm.producto = data[0];
         }
 
 
