@@ -42,8 +42,13 @@
 
         function deleteAsiento(id) {
             //console.log(id);
-            MovimientosService.DeleteAsiento(id);
-            CajasService.GetDetalleCaja(getDetalles);
+            var r = confirm('Realmente desea eliminar el movimiento?');
+
+            if(r){
+                MovimientosService.DeleteAsiento(id);
+                CajasService.GetDetalleCaja(getDetalles);
+            }
+
         }
 
         function abreCaja() {
@@ -62,8 +67,10 @@
 
             var results = [];
             var details = [];
-            var line = {tipo: '', descr: '', value: '', date:'', idAsiento:''};
+            var line = {tipo: '', descr: '', value: ''};
             var asiento = [];
+            vm.date = '';
+            vm.idAsiento = '';
 
             vm.total += parseFloat(data[0][0].saldoInicial);
 
@@ -80,8 +87,8 @@
                         line.tipo = 1;
                         vm.total += parseFloat(asiento[x].importe);
                         line.value = asiento[x].importe;
-                        line.date = asiento[x].fecha;
-                        line.idAsiento = asiento[x].idAsiento;
+                        details.date = asiento[x].fecha;
+                        details.idAsiento = asiento[x].idAsiento;
                         details.push(line);
                     } else {
                         line.descr = '';
@@ -105,12 +112,13 @@
                         details.push(line);
                     }
                 }
-                console.log(details);
+                //console.log(details);
                 results.push(details);
 
                 //console.log(data[i].detalles);
             }
-            vm.detalleCaja = data;
+            //vm.detalleCaja = data;
+            vm.detalleCaja = results;
         }
 
 
