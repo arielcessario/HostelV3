@@ -29,11 +29,13 @@
         var vm = this;
         vm.detalleCaja = [];
         vm.total = 0.0;
+        vm.show= false;
 
         vm.abrirCaja = abrirCaja;
 
         CajasService.GetSaldoInicial(function (data) {
             vm.total = data;
+            vm.show = true;
         });
 
         function abrirCaja() {

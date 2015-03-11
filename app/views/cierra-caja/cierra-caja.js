@@ -29,7 +29,7 @@
         var vm = this;
         vm.detalleCaja = [];
         vm.total = 0.0;
-
+        vm.show= false;
         vm.cerrarCaja = cerrarCaja;
 
         CajasService.GetSaldoFinal(getSaldoFinal);
@@ -40,7 +40,7 @@
             vm.totalDolares = data[0][0].total;
             vm.totalEuros = data[1][0].total;
             vm.totalReales = data[2][0].total;
-
+            vm.show = true;
             //console.log(data);
         }
 

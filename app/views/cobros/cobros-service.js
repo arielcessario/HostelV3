@@ -8,7 +8,12 @@
 (function () {
 
     'use strict';
-    angular.module('cobros-service', ['toastr', 'movimientos-service', 'productos-service', 'ngRoute'])
+    angular.module('cobros-service',
+        ['toastr',
+            'movimientos-service',
+            'productos-service',
+            'ngRoute',
+            'movimientos-list'])
         .service('CobrosRepository', CobrosRepository)
         .factory('CobrosService', CobrosService);
 
@@ -17,8 +22,41 @@
         this.aCobrar = [];
     }
 
-    CobrosService.$inject = ['MovimientosService', '$cookieStore', 'ProductosService', '$location'];
-    function CobrosService(MovimientosService, $cookieStore, ProductosService, $location) {
+    CobrosService.$inject = [
+        'MovimientosService',
+        '$cookieStore',
+        'ProductosService',
+        '$location',
+        'MovimientoVenta',
+        'MovimientoVentaKiosko',
+        'MovimientoBSinAlcohol',
+        'MovimientoBConAlcohol',
+        'MovimientoCMV',
+        'MovimientoMercaderias',
+        'MovimientoClientes',
+        'MovimientoCaja',
+        'MovimientoDebito',
+        'MovimientoCredito',
+        'MovimientoMonedas',
+        'MovimientoMonedasVuelto',
+        'MovimientoDescuentos'];
+    function CobrosService(MovimientosService,
+                           $cookieStore,
+                           ProductosService,
+                           $location,
+                           MovimientoVenta,
+                           MovimientoVentaKiosko,
+                           MovimientoBSinAlcohol,
+                           MovimientoBConAlcohol,
+                           MovimientoCMV,
+                           MovimientoMercaderias,
+                           MovimientoClientes,
+                           MovimientoCaja,
+                           MovimientoDebito,
+                           MovimientoCredito,
+                           MovimientoMonedas,
+                           MovimientoMonedasVuelto,
+                           MovimientoDescuentos ) {
         var vm = this;
         var service = {};
         vm.asiento = 0;
@@ -57,201 +95,44 @@
             var detalles = [];
             var detalle = {};
             var cuenta = '';
+            var globals = $cookieStore.get('globals');
+            var usuario = globals.currentUser.id;
 
-
-                // Genera movimientos
-                // Genera Asiento de Ventas -> Ventas
-
-
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': items[0].cuenta,
-                    'importe': totalVenta - descuento,
-                    'detalles': []
-                };
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '2', // Detalle
-                    'valor': items[0].comentarios
-                }
-
-                detalles.push(detalle);
-
-                movimiento.detalles = detalles;
-                movimientos.push(movimiento);
-                detalles=[];
-                //console.log(items[i]);
-
-
-            //limpio detalles
-            detalle = {};
+            movimientos.push(MovimientoVenta.movimiento(items[0].cuenta, totalVenta - descuento, items[0].comentarios));
 
             if (data.aCuenta) {
                 // Genera Entrada a clientes
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '1.1.2.01',
-                    'importe': totalVenta - descuento,
-                    'detalles': []
-                };
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '2', // Detalle
-                    'valor': 'Hospedaje, ingreso a Deudores'
-                }
-
-                detalles.push(detalle);
-
+                movimiento = MovimientoClientes.movimiento(totalVenta - descuento, cliente, globals.currentUser.id);
             } else if(tipo === '0'){
                 // Genera Entrada a caja
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '1.1.1.01',
-                    'importe': totalVenta - descuento,
-                    'detalles': []
-                };
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '2', // Detalle
-                    'valor': 'Hospedaje, ingreso a Caja'
-                }
-
-                detalles.push(detalle);
-            } else if(tipo==='1' || tipo==='2'){
-                // Genera Entrada a bancos
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '1.1.1.22',
-                    'importe': totalVenta - descuento,
-                    'detalles': []
-                };
-
-                if(tipo==='1'){
-                    detalle = {
-                        'idMovimiento': -1,
-                        'idTipoDetalle': '2', // Detalle
-                        'valor': 'Hospedaje, ingreso a Débito'
-                    }
-
-                    detalles.push(detalle);
+                if (moneda.idMoneda !== 1) {
+                    // detalles de moneda a nivel de caja
+                    movimiento = MovimientoMonedas.movimiento(totalVenta - descuento,cliente, usuario, moneda.idMoneda, aPagar, moneda.cotizacion)
                 }else{
-                    detalle = {
-                        'idMovimiento': -1,
-                        'idTipoDetalle': '2', // Detalle
-                        'valor': 'Hospedaje, ingreso a Credito'
-                    }
+                    movimiento = MovimientoCaja.movimiento(totalVenta - descuento, globals.currentUser.id, 'Almacen, ingreso a Caja');
 
-                    detalles.push(detalle);
                 }
-
+            } else if(tipo==='1' || tipo==='2'){
+                 //Entrada a Bancos
+                if(tipo==='1'){
+                    movimiento = MovimientoDebito.movimiento( totalVenta - descuento, cliente, usuario);
+                }else{
+                    movimiento = MovimientoCredito.movimiento( totalVenta - descuento, cliente, usuario);
+                }
             }
 
-            // detalle idCliente, se agrega al movimiento de caja o a cuenta que se está generando
-
-            if (cliente !== -1) {
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '3', // Cliente
-                    'valor': cliente
-                }
-
-                detalles.push(detalle);
-            }
-
-            // detalle idUsuario, se agrega al movimiento de caja o a cuenta que se está generando
-
-            var globals = $cookieStore.get('globals');
-            detalle = {
-                'idMovimiento': -1,
-                'idTipoDetalle': '1', // Usuario
-                'valor': globals.currentUser.id
-            }
-
-            detalles.push(detalle);
-
-
-            // detalles de moneda a nivel de caja
-            if (moneda.idMoneda !== 1) {
-                movimiento.idCuenta = '1.1.1.10';
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '5', // idMoneda
-                    'valor': moneda.idMoneda
-                }
-
-                detalles.push(detalle);
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '7', // montoMoneda
-                    'valor': aPagar
-                }
-
-                detalles.push(detalle);
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '6', // Cotización
-                    'valor': moneda.cotizacion
-                }
-
-                detalles.push(detalle);
-
-
-            }
-
-
-            movimiento.detalles = detalles;
             movimientos.push(movimiento);
 
 
             // Entrego el cambio de moneda extrangera
             // Esto es un movimiento negativo de caja
             if(moneda.idMoneda !== 1 && vuelto!=0){
-                movimiento = {};
-                detalles = [];
                 // Genera Salida a caja
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '1.1.1.01',
-                    'importe': vuelto,
-                    'detalles': []
-                };
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '2', // Detalle
-                    'valor': 'Vuelto de moneda extranjera'
-                }
-
-                detalles.push(detalle);
-
-                movimiento.detalles = detalles;
+                movimiento = MovimientoMonedasVuelto.movimiento(vuelto);
                 movimientos.push(movimiento);
 
-                movimiento = {};
-                detalles = [];
                 // Genera Salida a caja
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '1.1.1.10',
-                    'importe': vuelto * -1,
-                    'detalles': []
-                };
-
-                detalle = {
-                    'idMovimiento': -1,
-                    'idTipoDetalle': '2', // Detalle
-                    'valor': 'Sobrante moneda extranjera'
-                }
-
-                detalles.push(detalle);
-
-                movimiento.detalles = detalles;
+                movimiento = MovimientoCaja.movimiento(vuelto * -1, usuario, 'Sobrante moneda extranjera');
                 movimientos.push(movimiento);
             }
 
@@ -259,21 +140,10 @@
             // Genera descuento
 
             if(descuento > 0){
-                movimiento = {
-                    //'idAsiento': vm.asiento,
-                    'idCuenta': '4.1.4.01', // Descuentos otorgados
-                    'importe': descuento,
-                    'detalles': []
-                };
-
-                movimientos.push(movimiento);
-
+                movimientos.push(MovimientoDescuentos.movimiento(descuento));
             }
-
-
-
-            //console.log(movimientos);
-            saveMovimientos(movimientos);
+            console.log(movimientos);
+            //saveMovimientos(movimientos);
 
         }
 

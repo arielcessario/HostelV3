@@ -35,13 +35,12 @@
         vm.deleteAsiento = deleteAsiento;
 
 
-
         CajasService.GetDetalleCaja(getDetalles);
         vm.abreCaja = abreCaja;
         vm.cierraCaja = cierraCaja;
 
 
-        function deleteAsiento(id){
+        function deleteAsiento(id) {
             //console.log(id);
             MovimientosService.DeleteAsiento(id);
             CajasService.GetDetalleCaja(getDetalles);
@@ -59,21 +58,60 @@
 
         function getDetalles(data) {
 
+            //console.log(data);
+
+            var results = [];
+            var details = [];
+            var line = {tipo: '', descr: '', value: '', date:'', idAsiento:''};
             var asiento = [];
+
             vm.total += parseFloat(data[0][0].saldoInicial);
+
+
             for (var i = 0; i < data.length; i++) {
                 // solo las entradas a caja
                 asiento = data[i];
+                details = [];
                 for (var x = 0; x < asiento.length; x++) {
+                    //console.log(asiento[x]);
+                    line = {};
+
                     if (asiento[x].idCuenta === '1.1.1.01') {
+                        line.tipo = 1;
                         vm.total += parseFloat(asiento[x].importe);
+                        line.value = asiento[x].importe;
+                        line.date = asiento[x].fecha;
+                        line.idAsiento = asiento[x].idAsiento;
+                        details.push(line);
+                    } else {
+                        line.descr = '';
+                        line.tipo = 2;
+                        for (var y = 0; y < asiento[x].detalles.length; y++) {
+                            if (asiento[x].detalles[y].idTipoDetalle == 2) { // Detalle
+                                line.descr += asiento[x].detalles[y].valor + ' ';
+                            }
+
+                            if (asiento[x].detalles[y].idTipoDetalle == 8) { // Producto
+
+                                line.descr += asiento[x].detalles[y].producto;
+                            }
+
+
+                            if (asiento[x].detalles[y].idTipoDetalle == 9) { // Precio unitario
+                                line.value = asiento[x].detalles[y].valor;
+                            }
+                        }
+                        //console.log(line);
+                        details.push(line);
                     }
                 }
+                console.log(details);
+                results.push(details);
 
                 //console.log(data[i].detalles);
             }
             vm.detalleCaja = data;
-        };
+        }
 
 
     }
